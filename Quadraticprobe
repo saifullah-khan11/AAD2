@@ -1,0 +1,48 @@
+import java.util.*;
+
+public class HashingDemo {
+    static final int SIZE = 10;
+    static final int[] keys = {23, 4, 57, 82, 95, 13, 113, 224, 72, 18};
+    static final int EMPTY = Integer.MIN_VALUE;
+
+    static int hash(int key) {
+        return key % SIZE;
+    }
+
+    static void quadraticProbing() {
+        int[] table = new int[SIZE];
+        Arrays.fill(table, EMPTY);
+
+        for (int key : keys) {
+            int index = hash(key);
+            boolean inserted = false;
+
+            for (int i = 0; i < SIZE; i++) {
+                int pos = (index + i * i) % SIZE;
+                if (table[pos] == EMPTY) {
+                    table[pos] = key;
+                    inserted = true;
+                    break;
+                }
+            }
+
+            if (!inserted) {
+                System.out.println("Could not insert " + key + " using quadratic probing.");
+            }
+        }
+
+        System.out.println("3) Quadratic Probing");
+        printTable(table);
+        System.out.println();
+    }
+
+    static void printTable(int[] table) {
+        for (int i = 0; i < table.length; i++) {
+            System.out.println(i + " -> " + (table[i] == EMPTY ? "-" : table[i]));
+        }
+    }
+
+    public static void main(String[] args) {
+        quadraticProbing();
+    }
+}
