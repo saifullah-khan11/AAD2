@@ -1,0 +1,47 @@
+import java.util.*;
+
+public class HashingDemo {
+    static final int SIZE = 10;
+    static final int[] keys = {23, 4, 57, 82, 95, 13, 113, 224, 72, 18};
+    static final int EMPTY = Integer.MIN_VALUE;
+
+    static int hash(int key) {
+        return key % SIZE;
+    }
+
+    static void linearProbing() {
+        int[] table = new int[SIZE];
+        Arrays.fill(table, EMPTY);
+
+        int collisions = 0;
+
+        for (int key : keys) {
+            int index = hash(key);
+
+            for (int i = 0; i < SIZE; i++) {
+                int pos = (index + i) % SIZE;
+                if (table[pos] == EMPTY) {
+                    table[pos] = key;
+                    break;
+                } else {
+                    collisions++;
+                }
+            }
+        }
+
+        System.out.println("2) Linear Probing");
+        printTable(table);
+        System.out.println("Collisions = " + collisions);
+        System.out.println();
+    }
+
+    static void printTable(int[] table) {
+        for (int i = 0; i < table.length; i++) {
+            System.out.println(i + " -> " + (table[i] == EMPTY ? "-" : table[i]));
+        }
+    }
+
+    public static void main(String[] args) {
+        linearProbing();
+    }
+}
