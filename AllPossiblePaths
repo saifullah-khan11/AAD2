@@ -1,0 +1,42 @@
+import java.util.*;
+
+public class AllPaths {
+
+    static void findPaths(ArrayList<ArrayList<Integer>> graph,
+                          int src, int dest,
+                          boolean[] visited,
+                          List<Integer> path) {
+
+        visited[src] = true;
+        path.add(src);
+
+        if(src == dest) {
+            System.out.println(path);
+        } else {
+            for(int nbr : graph.get(src)) {
+                if(!visited[nbr]) {
+                    findPaths(graph, nbr, dest, visited, path);
+                }
+            }
+        }
+
+        path.remove(path.size()-1);
+        visited[src] = false;
+    }
+
+    public static void main(String[] args) {
+        int V = 4;
+
+        ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+
+        for(int i=0;i<V;i++)
+            graph.add(new ArrayList<>());
+
+        graph.get(0).add(1);
+        graph.get(0).add(2);
+        graph.get(1).add(3);
+        graph.get(2).add(3);
+
+        findPaths(graph,0,3,new boolean[V],new ArrayList<>());
+    }
+}
